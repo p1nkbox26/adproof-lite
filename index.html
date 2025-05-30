@@ -7,7 +7,7 @@
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/supabase.umd.js"></script>
+  <script src="https://unpkg.com/@supabase/supabase-js@2.45.4/dist/main.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
@@ -18,14 +18,19 @@
     const { createRoot } = ReactDOM;
 
     let supabase;
-    try {
-      supabase = window.supabase.createClient(
-        'https://jsmfjeifckdyggrueivc.supabase.co',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzbWZqZWlmY2tkeWdncnVlaXZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg2MDAwODcsImV4cCI6MjA2NDE3NjA4N30.L3JoQEX_jlpePq_MLyXnr4bXFQYEZQEUl-DHIX8Mk4Y'
-      );
-    } catch (err) {
-      console.error('Ошибка Supabase:', err.message);
+    if (typeof window.supabase === 'undefined') {
+      console.error('Supabase SDK не загружен');
       supabase = null;
+    } else {
+      try {
+        supabase = window.supabase.createClient(
+          'https://jsmfjeifckdyggrueivc.supabase.co',
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpzbWZqZWlmY2tkeWdncnVlaXZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg2MDAwODcsImV4cCI6MjA2NDE3NjA4N30.L3JoQEX_jlpePq_MLyXnr4bXFQYEZQEUl-DHIX8Mk4Y'
+        );
+      } catch (err) {
+        console.error('Ошибка Supabase:', err.message);
+        supabase = null;
+      }
     }
 
     const updateUserEmailHeader = (email) => {
