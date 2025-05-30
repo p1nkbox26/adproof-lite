@@ -7,7 +7,7 @@
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/module/supabase.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/supabase.umd.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
@@ -185,7 +185,7 @@
         if (!supabase) return;
         updateUserEmailHeader(adminEmail);
         await supabase.from('registration_requests').delete().eq('id', id);
-        setRequests(requests.filter(r => r.id !== id));
+        setRequests(requests.filter(r => r.id !== request.id));
         alert('Заявка отклонена');
       };
 
